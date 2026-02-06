@@ -14,7 +14,6 @@ const Dashboard = () => {
     console.log("Redux auth slice 👉", useSelector(state => state.auth));
 
     console.log("Redux auth slice 👉", useSelector(state => state.auth));
-
     const admin = useSelector((state) => state.auth.admin);
     const doctorId = admin?._id;
 

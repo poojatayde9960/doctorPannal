@@ -19,6 +19,15 @@ export const patientsApi = createApi({
                 },
                 providesTags: ["patients"]
             }),
+            getPatientById: builder.query({
+                query: (patientId) => {
+                    return {
+                        url: `/get-patient/${patientId}`,
+                        method: "GET"
+                    }
+                },
+                providesTags: ["patients"]
+            }),
             getVisits: builder.query({
                 query: (doctorId) => {
                     return {
@@ -121,4 +130,4 @@ export const patientsApi = createApi({
     }
 })
 
-export const { useAddDoctorScheduleMutation, useDeleteScheduleMutation, useGetDoctorScheduleQuery, useGetDashQuery, useResheduleAppointmentMutation, useGetVisitsQuery, useTransferAppointmentMutation, useGetAppointmentsQuery, useAddPrescriptionMutation, useGetDoctorsQuery, useChangeStatusMutation, useMyPatientsQuery } = patientsApi
+export const { useAddDoctorScheduleMutation, useGetPatientByIdQuery, useDeleteScheduleMutation, useGetDoctorScheduleQuery, useGetDashQuery, useResheduleAppointmentMutation, useGetVisitsQuery, useTransferAppointmentMutation, useGetAppointmentsQuery, useAddPrescriptionMutation, useGetDoctorsQuery, useChangeStatusMutation, useMyPatientsQuery } = patientsApi

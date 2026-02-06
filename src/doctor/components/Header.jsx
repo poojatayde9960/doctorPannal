@@ -11,13 +11,16 @@ const Header = ({ toggleSidebar }) => {
     const [logout, { isLoading }] = useLogoutMutation();
     const location = useLocation();
     const navigate = useNavigate();
-    const [dropdownOpen, setDropdownOpen] = useState(false);
 
     // ✅ Get doctor info from Redux
-    const admin = useSelector((state) => state.auth.admin);
-    const doctor = admin?.doctor;
-    const doctorImage = doctor?.image || null;
-    const doctorName = doctor?.name || "Doctor";
+    const admin = useSelector((state) => state.auth?.admin);
+
+    // Extract doctor information with proper fallbacks
+    const doctorName = admin?.name || admin?.doctorName || "Doctor";
+    const doctorEmail = admin?.email || "";
+    const doctorImage = admin?.image || admin?.profileImage || null;
+    const doctorSpecialty = admin?.specialty || admin?.specialization || "";
+    const doctorId = admin?._id || "";
 
     // Logout handler
     const handleLogout = async () => {
@@ -34,18 +37,40 @@ const Header = ({ toggleSidebar }) => {
         }
     };
 
-    // Path to Title Mapping
-    const titles = {
-        "/": "Dashboard",
-        "/appointments": "Appointments",
-        "/products": "Products",
-        "/orders": "Orders",
-        "/pendingApprovals": "PendingApprovals",
-        "/addProduct": "AddProduct",
-        "/leads": "Leads",
-        "/transactions": "Transactions",
-        "/partnerManagement": "Partner Management",
-        "/settings": "Settings",
+    // ✅ Enhanced Path to Title Mapping - Covers all routes
+    const getPageTitle = () => {
+        const path = location.pathname;
+
+        // Exact path matches
+        const titleMap = {
+            "/": "Dashboard",
+            "/appointments": "Appointments",
+            "/myPatient": "My Patients",
+            "/schedule": "Schedule",
+            "/alldoctors": "All Doctors",
+            "/prescriptions": "Prescriptions",
+            "/addProduct": "Invoice",
+            "/settings": "Settings",
+        };
+
+        // Check exact match first
+        if (titleMap[path]) {
+            return titleMap[path];
+        }
+
+        // Handle dynamic routes (e.g., /patient/123)
+        if (path.startsWith('/patient/')) {
+            return "Patient Details";
+        }
+        if (path.startsWith('/appointment/')) {
+            return "Appointment Details";
+        }
+        if (path.startsWith('/doctor/')) {
+            return "Doctor Details";
+        }
+
+        // Default fallback
+        return "Dashboard";
     };
     return (
         <header className="bg-white shadow-md p-4 flex items-center justify-between">
@@ -54,8 +79,8 @@ const Header = ({ toggleSidebar }) => {
                 <FaBars />
             </button>
 
-            {/* Dynamic Page Title */}
-            <h1 className="text-xl font-bold">{titles[location.pathname] || "Admin Panel"}</h1>
+            {/* Dynamic Page Title - Using function */}
+            <h1 className="text-xl font-bold text-gray-800">{getPageTitle()}</h1>
 
             <div className="flex items-center gap-8">
                 {/* Search Input */}
@@ -67,12 +92,13 @@ const Header = ({ toggleSidebar }) => {
                 {/* Notification Icon */}
                 <div className="relative cursor-pointer">
                     <FaBell className="text-gray-700 text-2xl" />
+                    {/* TODO: Make notification count dynamic from API */}
                     <span className="absolute top-0 right-0 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
                         3
                     </span>
                 </div>
 
-                {/* Profile Dropdown (No State Needed) */}
+                {/* Profile Dropdown */}
                 <div className="dropdown dropdown-end">
                     <div tabIndex={0} role="button" className="flex items-center gap-2 cursor-pointer">
                         {/* Profile Image - Dynamic */}
@@ -86,17 +112,43 @@ const Header = ({ toggleSidebar }) => {
                             <FcBusinessman className="w-10 h-10 rounded-full bg-gray-200" />
                         )}
 
-                        {/* Doctor Name */}
-                        <span className="hidden md:block text-sm font-medium text-gray-700">
-                            {doctorName}
-                        </span>
+                        {/* Doctor Name & Specialty */}
+                        <div className="hidden md:block text-left">
+                            <p className="text-sm font-medium text-gray-700">{doctorName}</p>
+                            {doctorSpecialty && (
+                                <p className="text-xs text-gray-500">{doctorSpecialty}</p>
+                            )}
+                        </div>
 
                         {/* Dropdown Icon */}
                         <FaChevronDown className="text-gray-500" />
                     </div>
 
                     {/* Dropdown Menu */}
-                    <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-40">
+                    <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-56">
+                        {/* Profile Info */}
+                        <li className="menu-title">
+                            <span className="text-xs text-gray-500">Profile</span>
+                        </li>
+                        <li className="px-4 py-2 text-sm border-b">
+                            <div>
+                                <p className="font-semibold">{doctorName}</p>
+                                {doctorEmail && <p className="text-xs text-gray-500">{doctorEmail}</p>}
+                                {doctorId && <p className="text-xs text-gray-400">ID: {doctorId.slice(-6)}</p>}
+                            </div>
+                        </li>
+
+                        {/* Settings Option */}
+                        <li>
+                            <button
+                                onClick={() => navigate('/settings')}
+                                className="text-gray-700 w-full text-left"
+                            >
+                                Settings
+                            </button>
+                        </li>
+
+                        {/* Logout */}
                         <li>
                             <button
                                 className="text-red-600 w-full text-left"
