@@ -20,7 +20,7 @@ const ScheduleSlot = ({ time, title, color = "blue", onDelete }) => {
                 <div className="text-xs opacity-90">{title}</div>
             </div>
             <div className="flex space-x-3 text-white/80 text-sm">
-                <FiEdit2 className="cursor-pointer hover:text-white" />
+                {/* <FiEdit2 className="cursor-pointer hover:text-white" /> */}
                 <FiTrash2 className="cursor-pointer hover:text-white" onClick={onDelete} />
             </div>
         </div>

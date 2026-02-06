@@ -11,6 +11,7 @@ const menuItems = [
     { name: "Appointments", path: "/appointments", icon: <FaCalendarAlt /> },
     { name: "MyPatient", path: "/myPatient", icon: <FaUser /> },
     { name: "Schedule", path: "/schedule", icon: <LuClock3 /> },
+    { name: "Profile", path: "/profile", icon: <FaUserMd /> },
     { name: "Doctors", path: "/alldoctors", icon: <FaUserMd /> },
     // { name: "Invoice", path: "/addProduct", icon: <FaBell /> },
     { name: "Prescriptions", path: "/prescriptions", icon: <RiPagesLine /> },

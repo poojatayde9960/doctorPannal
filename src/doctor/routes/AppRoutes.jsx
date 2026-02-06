@@ -11,6 +11,7 @@ import Prescriptions from '../pages/prescriptions/Prescriptions'
 import AllDoctors from '../pages/doctors/AllDoctors'
 import DoctorDetails from '../pages/doctors/DoctorDetails'
 import WeeklySchedule from '../pages/schedule/WeeklySchedule'
+import DoctorProfile from '../pages/DoctorProfile'
 
 const AppRoutes = () => {
 
@@ -33,6 +34,7 @@ const AppRoutes = () => {
                     <Route path="doctordetails/:id" element={<DoctorDetails />} />
 
                     <Route path="schedule" element={<WeeklySchedule />} />
+                    <Route path="profile" element={<DoctorProfile />} />
                 </Route>
             </Route>
         </Routes>
