@@ -12,7 +12,7 @@ const menuItems = [
     { name: "MyPatient", path: "/myPatient", icon: <FaUser /> },
     { name: "Schedule", path: "/schedule", icon: <LuClock3 /> },
     { name: "Doctors", path: "/alldoctors", icon: <FaUserMd /> },
-    { name: "Invoice", path: "/addProduct", icon: <FaBell /> },
+    // { name: "Invoice", path: "/addProduct", icon: <FaBell /> },
     { name: "Prescriptions", path: "/prescriptions", icon: <RiPagesLine /> },
 
 ];
