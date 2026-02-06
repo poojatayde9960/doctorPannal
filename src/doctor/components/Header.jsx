@@ -125,35 +125,15 @@ const Header = ({ toggleSidebar }) => {
                     </div>
 
                     {/* Dropdown Menu */}
-                    <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-56">
-                        {/* Profile Info */}
-                        <li className="menu-title">
-                            <span className="text-xs text-gray-500">Profile</span>
-                        </li>
-                        <li className="px-4 py-2 text-sm border-b">
-                            <div>
-                                <p className="font-semibold">{doctorName}</p>
-                                {doctorEmail && <p className="text-xs text-gray-500">{doctorEmail}</p>}
-                                {doctorId && <p className="text-xs text-gray-400">ID: {doctorId.slice(-6)}</p>}
-                            </div>
-                        </li>
-
-                        {/* Settings Option */}
+                    <ul
+                        tabIndex={0}
+                        className="dropdown-content z-[20] mt-3 menu p-0 shadow bg-white rounded-box w-44"
+                    >
                         <li>
                             <button
-                                onClick={() => navigate('/settings')}
-                                className="text-gray-700 w-full text-left"
-                            >
-                                Settings
-                            </button>
-                        </li>
-
-                        {/* Logout */}
-                        <li>
-                            <button
-                                className="text-red-600 w-full text-left"
                                 onClick={handleLogout}
                                 disabled={isLoading}
+                                className="flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50 rounded-box"
                             >
                                 {isLoading ? "Logging out..." : "Logout"}
                             </button>
